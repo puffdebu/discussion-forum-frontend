@@ -1,0 +1,9 @@
+.Header {
+  display: flex;
+  align-items: center;
+}
+
+.Name {
+  font-size: 20px;
+  margin-left: 5px;
+}

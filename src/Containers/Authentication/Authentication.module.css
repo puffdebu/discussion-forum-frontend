@@ -1,0 +1,32 @@
+.Authentication {
+  margin: 20px auto;
+  width: 80%;
+  text-align: center;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.Authentication input {
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .Authentication {
+    width: 500px;
+  }
+}
+
+.error {
+  text-align: center;
+  color: rgb(236, 69, 69);
+  font-weight: 1000;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30%;
+}

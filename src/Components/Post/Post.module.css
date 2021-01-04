@@ -1,0 +1,33 @@
+.Post {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  width: 80%;
+  box-shadow: 0 2px 3px #ccc;
+  border: 1px solid #eee;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.SvgStyling {
+  display: flex;
+  font-size: 28px;
+}
+
+.Name {
+  font-size: 24px;
+  font-weight: 1000;
+  margin-left: 5px;
+}
+
+.postContent {
+  padding-left: 30px;
+  font-family: cursive;
+}
+
+.ButtonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}

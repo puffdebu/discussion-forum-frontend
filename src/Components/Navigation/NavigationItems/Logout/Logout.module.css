@@ -1,0 +1,23 @@
+.li {
+  padding: 0.25rem 1rem;
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.button {
+  font-size: 100%;
+  font-family: inherit;
+  border: 0;
+  padding: 0;
+  background: inherit;
+  color: white;
+  cursor: pointer;
+}
+
+.button :hover {
+  border: 1px solid #7d8ee9;
+}
