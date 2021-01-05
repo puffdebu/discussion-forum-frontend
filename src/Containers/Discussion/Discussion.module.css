@@ -10,3 +10,14 @@
   max-width: 500px;
   padding: 20px;
 }
+
+.Discussion textarea {
+  width: 80%;
+  margin-bottom: 20px;
+}
+.Spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+}

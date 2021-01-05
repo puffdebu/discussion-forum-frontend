@@ -22,7 +22,6 @@ class App extends Component {
           <Route path="/upcoming-events" exact component={UpcomingEvent} />
           <Route path="/question-discussion/:postId" exact component={QuestionDiscussion} />
           <Route path="/about-us" exact component={AboutUs} />
-          <Route path="/add-post" exact component={AddPost} />
           <Route path="/" exact component={Authentication} />
         </Switch>
       </Layout>
