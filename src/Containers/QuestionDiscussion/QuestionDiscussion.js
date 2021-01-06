@@ -1,10 +1,11 @@
 import React ,{ useState,useEffect } from 'react';
 import  { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Comment from '../../Components/Comment/Comment';
-import Button from '@material-ui/core/Button';
+import Button from '../../Components/UI/Button/Button';
 import { makeStyles } from '@material-ui/styles';
 import Aux from '../../Hoc/Auxiliary';
 import styles from './QuestionDiscussion.module.css';
@@ -27,6 +28,8 @@ const QuestionDiscussion = (props) => {
     const classes = useStyles();
     const [post,setPost] = useState();
     const [loading,setLoading] = useState(false);
+    const [comment,setComment] = useState('');
+    const [fetchNow,setFetchNow] = useState(false);
     useEffect(() => {
         setLoading(true);
         const postId = props.match.params.postId;
@@ -34,7 +37,26 @@ const QuestionDiscussion = (props) => {
             setPost(resp.data);
             setLoading(false);
         });
-    },[]);
+    },[fetchNow]);
+
+    const onButtonClicked = () => {
+        setLoading(true);
+        axios.post('http://localhost:8080/add-comment',{
+            userId : props.userId,
+            content : comment,
+            postId : props.match.params.postId,
+        }).then(() => {
+            setComment('');
+            setLoading(false);
+            setFetchNow(!fetchNow);
+        });
+    };
+
+    const checkDisabled = (value) => {
+        if(value.length > 0)
+        return false;
+        return true;
+    };
     let postContent = <div className={styles.Spinner}><CircularProgress /></div>;
     if(!loading && post){
         const name = post.name.charAt(0).toUpperCase() + post.name.slice(1);
@@ -64,9 +86,16 @@ const QuestionDiscussion = (props) => {
                             </div>
                         </div>
                     </div>
-                    <textarea rows="5" type="text"></textarea>
+                    <textarea
+                     value={comment}
+                     onChange={(event) => setComment(event.target.value)}
+                     rows="5" 
+                     type="text"
+                    >
+                    </textarea>
                     <Button
-                     className={classes.root}
+                     onClick={onButtonClicked}
+                     disabled={checkDisabled(comment)}
                     >
                         ADD COMMENT
                     </Button>
@@ -74,8 +103,13 @@ const QuestionDiscussion = (props) => {
             </div>
         );
     };
+    let redirect = null;
+    if(!props.isLoggedIn){
+        redirect = <Redirect to='/' />
+    }
     return (
         <Aux>
+            {redirect}
             {postContent}
         </Aux>
     );
@@ -83,6 +117,7 @@ const QuestionDiscussion = (props) => {
 
 const mapStateToProps = state => {
     return {
+        isLoggedIn : state.isLoggedIn,
         userId : state.userId,
         userName : state.userName,
     };
