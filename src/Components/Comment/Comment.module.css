@@ -7,3 +7,26 @@
   font-size: 20px;
   margin-left: 5px;
 }
+
+.UpvoteWrapper {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Upvote {
+  margin-right: 5px;
+}
+
+.Downvote {
+  margin-left: 5px;
+}
+
+.Upvoted {
+  fill: rgb(61, 241, 136);
+}
+
+.Downvoted {
+  fill: rgb(216, 73, 7);
+}

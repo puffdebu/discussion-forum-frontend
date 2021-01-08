@@ -6,26 +6,11 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Comment from '../../Components/Comment/Comment';
 import Button from '../../Components/UI/Button/Button';
-import { makeStyles } from '@material-ui/styles';
 import Aux from '../../Hoc/Auxiliary';
 import styles from './QuestionDiscussion.module.css';
 
-
-const useStyles = makeStyles({
-    root : {
-        width : '160px',
-        backgroundColor: 'rgba(44, 61, 85, 1)',
-        fontWeight : 'bold',
-        borderRadius : '6px',
-        marginLeft : '35%',
-        '&:hover': {
-            background: 'rgba(44, 61, 85, 1)',
-         }
-    },
-});
-
 const QuestionDiscussion = (props) => {
-    const classes = useStyles();
+
     const [post,setPost] = useState();
     const [loading,setLoading] = useState(false);
     const [comment,setComment] = useState('');
@@ -33,7 +18,8 @@ const QuestionDiscussion = (props) => {
     useEffect(() => {
         setLoading(true);
         const postId = props.match.params.postId;
-        axios.get(`http://localhost:8080/fetch-discussion-post/${postId}`).then(resp => {
+        axios.get(`http://localhost:8080/fetch-discussion-post/${postId}/${props.userId}`).then(resp => {
+            console.log(resp);
             setPost(resp.data);
             setLoading(false);
         });
@@ -57,6 +43,23 @@ const QuestionDiscussion = (props) => {
         return false;
         return true;
     };
+
+    const upvotedClicked = (commentId) => {
+        axios.post('http://localhost:8080/upvote/',{
+           commentId : commentId,
+           userId : props.userId,
+        }).then((resp) => {
+            setFetchNow(!fetchNow);
+        })
+    };
+    const downvotedClicked = (commentId) => {
+        axios.post('http://localhost:8080/downvote/',{
+            commentId : commentId,
+            userId : props.userId,
+        }).then(resp => {
+            setFetchNow(!fetchNow);
+        });
+    };
     let postContent = <div className={styles.Spinner}><CircularProgress /></div>;
     if(!loading && post){
         const name = post.name.charAt(0).toUpperCase() + post.name.slice(1);
@@ -76,7 +79,12 @@ const QuestionDiscussion = (props) => {
                 </div>
                 <div className={styles.OuterWrapper}>
                     {comments.map(comment => {
-                        return <Comment commentInfo={comment}/>;
+                        return <Comment 
+                                 commentInfo={comment}
+                                 key={comment.commentId}
+                                 onUpvoteClick={() => upvotedClicked(comment.commentId)}
+                                 onDownvoteClick={() => downvotedClicked(comment.commentId)}
+                                />;
                     })}
                     <div style={{margin : '10px'}}>
                         <div className={styles.Header}>

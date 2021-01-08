@@ -70,7 +70,8 @@ export const auth = (email,password,userName,signUp) => {
             dispatch(authSuccess(resp.data.idToken,resp.data.localId,userName));
             dispatch(asyncLogout(resp.data.expiresIn));
             if(!signUp){
-                axios.get('http://localhost:8080/get-info/'+resp.data.localId).then((resp) => {
+                axios.get('http://localhost:8080/get-info/'+resp.data.localId+'/'+ userName).then((resp) => {
+                    console.log(resp);
                     const userData = resp.data;
                     localStorage.setItem('userName',userData.name);
                     dispatch(LoginUser(userData.name,userData.userId));
